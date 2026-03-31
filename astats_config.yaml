@@ -1,0 +1,36 @@
+# AStats Multi-Model Routing Configuration
+# -------------------------------------------------------------
+# Format: LiteLLM-compatible strings (router.py handles the actual HTTP calls)
+#   "ollama/<model>"  — local open-weight via Ollama
+#   "gpt-4o"          — OpenAI (requires OPENAI_API_KEY env var)
+#   "<openai-compat>" — any OpenAI-compatible endpoint
+#   "openai/<model>"  — explicit OpenAI provider prefix
+
+# Global provider settings
+global:
+  # Base URL for local Ollama instance
+  ollama_api_base: "http://localhost:11434"
+
+agents:
+  # ── Supervisor ──────────────────────────────────────────────────────────
+  # The Supervisor only needs to output ONE word ("PYTHON" or "R").
+  # Using a tiny 1B-param model here avoids loading the full 8B weights
+  # (the primary cause of the previous OOM/crash).
+  # Swap to "ollama/llama3" if llama3.2:1b is not yet pulled.
+  supervisor: "ollama/llama3.2:1b"
+
+  # ── Python Specialist ───────────────────────────────────────────────────
+  # Handles data wrangling, summary stats, and visualizations.
+  # A mid-sized local model works well here.
+  python_specialist: "ollama/llama3"
+
+  # ── R Specialist ────────────────────────────────────────────────────────
+  # Handles advanced statistical analyses (mixed models, Bayesian, etc.).
+  # R is notoriously hard for LLMs; a commercial model gives best results.
+  # Requires: OPENAI_API_KEY environment variable (or set in .env)
+  r_specialist: "gpt-4o"
+
+# Retry / self-correction settings
+retry:
+  max_steps: 5             # Maximum agentic steps per specialist loop
+  feedback_on_error: true  # Feed tool errors back to the model for self-correction

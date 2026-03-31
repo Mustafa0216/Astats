@@ -1,0 +1,11 @@
+typer>=0.9.0
+rich>=13.0.0
+pandas>=2.0.0
+scipy>=1.10.0
+statsmodels>=0.14.0
+# Lightweight HTTP client — replaces litellm to eliminate the 50-80 MB
+# import overhead and OOM crash risk on memory-constrained machines.
+httpx>=0.27.0
+pyyaml>=6.0
+python-dotenv>=1.0.0
+matplotlib>=3.8.0
