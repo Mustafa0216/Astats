@@ -70,12 +70,11 @@ pytest tests/ -v
 
 ---
 
-## 📚 Methodology & Timeline
+## 📚 Methodology 
 
 AStats enforces mathematically correct workflows. The built-in **Statistical Critic Agent** peer-reviews results before an HTML report is generated.
 
 - Detailed Methodology: [METHODOLOGY.md](METHODOLOGY.md)
-- GSoC 2026 Timeline: [TIMELINE.md](TIMELINE.md)
 
 ---
 
